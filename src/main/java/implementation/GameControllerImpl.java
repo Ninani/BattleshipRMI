@@ -11,10 +11,10 @@ import java.util.List;
 
 public class GameControllerImpl implements GameController {
 
-    private static Player player1;
-    private static Player player2;
+    private Player player1;
+    private Player player2;
 //    private static List<Player> players = new LinkedList<>();
-    private static boolean finished;
+    private boolean finished;
     private GameBoard player1Game = new GameBoardImpl(10);
     private GameBoard player2Game = new GameBoardImpl(10);
 
@@ -28,7 +28,9 @@ public class GameControllerImpl implements GameController {
     public void run() {
 
         try {
+            player2.sendText("Wait a minute. "+player1.getName().toUpperCase()+" is putting ships.");
             player1Game = player1.putShips(player1Game);
+            player1.sendText("Wait a minute. "+player2.getName().toUpperCase()+" is putting ships.");
             player2Game = player2.putShips(player2Game);
             player1.addOpponentBoard(player2Game, player2.getName());
             player2.addOpponentBoard(player1Game, player1.getName());
@@ -40,14 +42,8 @@ public class GameControllerImpl implements GameController {
             player2.onStartGame();
 
             while (!finished){
-
-                player2.sendText(player1.getName().toUpperCase()+" is shooting...");
-                finished = player1.shoot();
-                player2.printGameboard(player1.getOpponentBoard());
-                player1.sendText(player2.getName().toUpperCase()+" is shooting...");
-                finished = player2.shoot();
-                player1.printGameboard(player2.getOpponentBoard());
-
+                finished = playerShoot(player1, player2);
+                finished = playerShoot(player2, player1);
             }
             // TODO: 23.03.16 finishing game - unregister client
 
@@ -56,6 +52,17 @@ public class GameControllerImpl implements GameController {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private boolean playerShoot(Player recentPlayer, Player opponent) throws RemoteException {
+        boolean finished;
+
+        opponent.sendText(recentPlayer.getName().toUpperCase()+" is shooting...");
+        finished = recentPlayer.shoot();
+        opponent.printGameboard(recentPlayer.getOpponentBoard());
+
+        return finished;
 
     }
 }

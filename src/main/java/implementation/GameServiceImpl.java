@@ -37,7 +37,7 @@ public class GameServiceImpl implements GameService {
     private void initializeSingle(Player player) throws RemoteException {
         Player computerOpponent = new ComputerPlayer();
         GameController gameController = new GameControllerImpl(player, computerOpponent);
-        executor.submit(gameController);
+        executor.execute(gameController);
     }
 
     private void initializeMultiplayer(Player player, int roomNumber) throws RemoteException {
@@ -47,7 +47,7 @@ public class GameServiceImpl implements GameService {
             opponent = waitingForPair.get(roomNumber);
             waitingForPair.remove(roomNumber);
             GameController gameController = new GameControllerImpl(player, opponent);
-            executor.submit(gameController);
+            executor.execute(gameController);
         } else {
             int number = randomRoom();
             waitingForPair.put(number, player);

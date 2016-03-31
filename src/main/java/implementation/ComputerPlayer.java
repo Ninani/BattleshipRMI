@@ -10,7 +10,7 @@ import java.util.Random;
 public class ComputerPlayer extends UnicastRemoteObject implements Player {
 
     private GameBoard opponentBoard;
-    private static String opponentNick;
+    private String opponentNick;
 
     public ComputerPlayer() throws RemoteException {
     }
