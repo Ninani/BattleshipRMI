@@ -11,8 +11,8 @@ public class RealPlayer extends UnicastRemoteObject implements Player {
 
     private static String nickname;
     private static String opponentNick;
-    private static boolean finished = false;
-    private static Object synch;
+    private boolean finished = false;
+    private Object synch;
     private GameBoard opponentBoard;
     Scanner scanner = new Scanner(System.in);
 

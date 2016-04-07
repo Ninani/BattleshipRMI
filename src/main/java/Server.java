@@ -9,7 +9,6 @@ import java.rmi.server.UnicastRemoteObject;
 public class Server {
 
     private static GameService gameServiceImpl;
-    private static int boardSize = 10;
 
     public static void main(String[] args) {
 
@@ -20,7 +19,7 @@ public class Server {
 
         try {
             String hostname = InetAddress.getLocalHost().getHostAddress();
-            System.out.println("Server IP " + hostname);
+            System.out.println("Server IP: " + hostname);
             System.setProperty("java.rmi.server.hostname", hostname);
         } catch (UnknownHostException e) {
             e.printStackTrace();
