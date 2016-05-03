@@ -16,5 +16,6 @@ buildNumber.properties
 
 .idea/
 *.iws
-/out/
+JMSSolver/out/
+BattleshipRMI/out/
 *.iml
